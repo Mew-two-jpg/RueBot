@@ -34,9 +34,6 @@ async def candiedbx(ctx):
 async def skrill(ctx):
     await ctx.send("https://skin.club/en")
 
-@bot.command()
-async def skrrt():
-    quit()
 
 
 

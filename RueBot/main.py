@@ -35,7 +35,7 @@ async def skrill(ctx):
     await ctx.send("https://skin.club/en")
 
 @bot.command()
-async def skrrt(ctx):
+async def skrrt():
     quit()
 
 

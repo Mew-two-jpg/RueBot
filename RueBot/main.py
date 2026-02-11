@@ -12,7 +12,7 @@ welcome_mssg = ["Welcome in buzz", "Type shi", "Them candied bxs"]
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 
-handler = logging.FileHandler(filename='.env', encoding='utf-8', mode='w')
+handler = logging.FileHandler(filename='log', encoding='utf-8', mode='w')
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True

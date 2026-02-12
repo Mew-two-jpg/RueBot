@@ -9,6 +9,8 @@ import openai
 
 welcome_mssg = ["Welcome in buzz", "Type shi", "Them candied bxs"]
 roles = ["test1", "test2", "test3", "test4", "test5", "test6", "test7"]
+lines= ["folded em", "crunched em", "ruined em", "needed that", "just ran a check"]
+
 load_dotenv()
 token = os.getenv("DISCORD_TOKEN")
 opai_token = os.getenv("OPENAI_TOKEN")
@@ -52,7 +54,7 @@ async def on_message(message):
         videos = glob.glob('ruetoges/*.mp4')
         if videos:
             video_path = random.choice(videos)
-            await message.channel.send(file=discord.File(video_path))
+            await message.channel.send(random.choice(lines), file=discord.File(video_path))
         else:
             await message.channel.send("No videos found!")
         return

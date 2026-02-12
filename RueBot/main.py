@@ -1,5 +1,3 @@
-from enum import member
-
 import discord
 from discord.ext import commands
 import logging
@@ -7,10 +5,9 @@ from dotenv import load_dotenv
 import os
 import random
 import openai
+from testicle import test
 
-
-
-
+test = test
 welcome_mssg = ["Welcome in buzz", "Type shi", "Them candied bxs"]
 roles = ["test1", "test2", "test3", "test4", "test5", "test6", "test7"]
 load_dotenv()
@@ -45,7 +42,41 @@ async def skrrt(ctx):
     quit()
 
 
+@bot.event
+async def on_message(message):
+    #print(f"Message from {message.author}: {message.content}")
+    if message.author == bot.user:
+        return
 
+    # Define word triggers and responses
+    # Format: 'word': ('type', 'value') or ('both', ('text', 'image_path'))
+    word_responses = {
+        'candied bxs': ('both', ('got dat for you', 'candiedbx.jpg')),
+        'wsg': ('text', 'what it do mane'),
+        'stuffin her': ('text', 'dats fire :fire:'),
+         "see it": ('both',('you see it?', "vlone.jpg")),
+        "brendan": ('text', 'you mean nigdan?'),
+        "rue": ('text', 'wsg'),
+    }
+
+    # Check if any of the trigger words are in the message
+    message_lower = message.content.lower()
+    for word, response_data in word_responses.items():
+        if word in message_lower:
+            response_type, response_value = response_data
+
+            if response_type == 'both':
+                text, image_path = response_value
+                await message.channel.send(f"{message.author.mention} {text}", file=discord.File(image_path))
+            elif response_type == 'image':
+                await message.channel.send(f"{message.author.mention}", file=discord.File(response_value))
+            elif response_type == 'text':
+                await message.channel.send(f"{message.author.mention} {response_value}")
+
+            break  # Optional: remove if you want multiple responses per message
+
+    # Process commands
+    await bot.process_commands(message)
 
 @bot.command()
 async def imagine(ctx, *, prompt):

@@ -19,7 +19,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
 intents.typing = True
-bot = commands.Bot(command_prefix='$', intents=intents)
+bot = commands.Bot(command_prefix='hey rueben ', intents=intents)
 
 @bot.event
 async def on_ready():
@@ -43,20 +43,31 @@ async def skrrt(ctx):
 
 @bot.event
 async def on_message(message):
-    #print(f"Message from {message.author}: {message.content}")
+    import glob
+
     if message.author == bot.user:
         return
 
+    if 'show me a clip' in message.content.lower():
+        videos = glob.glob('ruetoges/*.mp4')
+        if videos:
+            video_path = random.choice(videos)
+            await message.channel.send(file=discord.File(video_path))
+        else:
+            await message.channel.send("No videos found!")
+        return
+
+    # Process other message triggers
+    message_lower = message.content.lower()
     word_responses = {
         'candied bxs': ('both', ('got dat for you', 'ruemages/candiedbx.jpg')),
         'wsg': ('text', 'what it do mane'),
         'stuffin her': ('text', 'dats fire :fire:'),
          "see it": ('both',('you see it?', "ruemages/vlone.jpg")),
         "brendan": ('text', 'you mean nigdan?'),
-        "rue": ('text', 'wsg'),
+        "big rue": ('text', 'wsg'),
     }
 
-    message_lower = message.content.lower()
     for word, response_data in word_responses.items():
         if word in message_lower:
             response_type, response_value = response_data
@@ -97,5 +108,5 @@ async def imagine(ctx, *, prompt):
         await ctx.send(f"Something went wrong. {e}")
 
 
-
+bot.run(token, log_handler = handler, log_level = logging.DEBUG)
 bot.run(token, log_handler = handler, log_level = logging.DEBUG)
